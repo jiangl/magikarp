@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard';
-import HomeInfo from './HomeInfo';
+import HomePanel from './HomePanel';
 import HomeListing from './HomeListing';
 
 const mockHighConfidence = Array(20).fill({
@@ -12,10 +12,17 @@ const mockHighConfidence = Array(20).fill({
 });
 
 const mockLowConfidence = Array(20).fill({
-  address: '629 Sterling',
+  address: '629 Nahanton',
   cost: 11,
   confidencePercentile: 37
 });
+
+const mockHomeDetails = {
+  streetAddr: '47 Tehama',
+  cityAddr: 'San Francisco, CA',
+  cost: 44,
+  confidence: 75
+};
 
 class App extends Component {
   render() {
@@ -30,7 +37,9 @@ class App extends Component {
             lowConfidenceHomes={mockLowConfidence}
           />
         </div>
-        <div className="right-panel" />
+        <div className="right-panel">
+          <HomePanel {...mockHomeDetails} />
+        </div>
       </div>
     );
   }
