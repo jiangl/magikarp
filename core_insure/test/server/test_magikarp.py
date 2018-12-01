@@ -59,7 +59,8 @@ def test_update_attributes(client):
         'INCOME': 34233
     }
 
-    output = client.post('/update_attribute', json=dict(attributes=fake_features))
+    output = client.post('/update_attribute', json=dict(house_id=0,
+                                                        attributes=fake_features))
     status = output.status_code
     values = output.data
     assert status == 200

@@ -1,9 +1,12 @@
+amqp==2.3.2
 appdirs==1.4.0
 appnope==0.1.0
 astroid==1.4.9
 atomicwrites==1.2.1
 attrs==18.2.0
+billiard==3.5.0.4
 bleach==2.0.0
+celery==4.2.1
 certifi==2018.11.29
 chardet==3.0.4
 Click==7.0
@@ -31,6 +34,7 @@ jupyter==1.0.0
 jupyter-client==5.2.3
 jupyter-console==5.1.0
 jupyter-core==4.4.0
+kombu==4.2.1
 lazy-object-proxy==1.2.2
 MarkupSafe==1.0
 matplotlib==2.0.2
@@ -77,6 +81,7 @@ torchvision==0.2.1
 tornado==4.5.1
 traitlets==4.3.2
 urllib3==1.24.1
+vine==1.1.4
 virtualenv==15.1.0
 wcwidth==0.1.7
 webencodings==0.5.1

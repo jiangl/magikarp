@@ -1,5 +1,11 @@
 base: &base
     filepath: '~/magikarp/core_insure/cache'
+data:
+    dbname: 'postgres'
+    host: 'localhost'
+    port: 5432
+celery:
+    broker_url: amqp://localhost
 assessor:
     <<: *base
     model: linear_regression
