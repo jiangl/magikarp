@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from core_insure.assessor.home_assessor import HomeAssessor
-from core_insure.data.dataloader import DataLoader
+from core_insure.dataio.dataloader import DataLoader
 import random
 from ruamel.yaml import YAML
 from celery import Celery
