@@ -1,0 +1,40 @@
+.homeInfo {
+  background-color: #061253;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.homeInfo.high > .address {
+  color: #697afe;
+}
+
+.homeInfo.low > .address {
+  color: #c692ff;
+}
+
+.address {
+  flex: 1;
+}
+
+.cost {
+  color: rgba(255, 255, 255, 0.7);
+  flex: 1;
+}
+
+.confidenceBar {
+  display: flex;
+  flex: 1;
+}
+
+.barFill {
+  border-right: 2px solid #c692ff;
+  background-color: rgba(198, 146, 255, 0.4);
+  height: 100%;
+}
+
+.homeInfo.high .barFill {
+  border-color: #697afe;
+  background-color: rgba(105, 122, 254, 0.4);
+}

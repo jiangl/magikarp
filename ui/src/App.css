@@ -10,13 +10,21 @@
 }
 
 .left-panel {
-  flex: 2 1 auto;
+  flex: 2 1 0;
 }
 
 .middle-panel {
-  flex: 1 1 auto;
+  flex: 1 1 0;
 }
 
 .right-panel {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 0;
 }
