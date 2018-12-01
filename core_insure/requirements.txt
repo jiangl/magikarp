@@ -1,7 +1,10 @@
 appdirs==1.4.0
 appnope==0.1.0
 astroid==1.4.9
+atomicwrites==1.2.1
+attrs==18.2.0
 bleach==2.0.0
+Click==7.0
 cycler==0.10.0
 decorator==4.0.11
 dj-database-url==0.4.1
@@ -9,6 +12,7 @@ Django==1.10.6
 django-lazysignup==1.1.1
 django-localflavor==1.4.1
 entrypoints==0.2.3
+Flask==1.0.2
 gunicorn==19.6.0
 html5lib==0.999999999
 ipykernel==4.6.1
@@ -16,8 +20,9 @@ ipython==6.1.0
 ipython-genutils==0.2.0
 ipywidgets==6.0.0
 isort==4.2.5
+itsdangerous==1.1.0
 jedi==0.10.2
-Jinja2==2.9.6
+Jinja2==2.10
 jsonschema==2.6.0
 jupyter==1.0.0
 jupyter-client==5.1.0
@@ -28,6 +33,7 @@ MarkupSafe==1.0
 matplotlib==2.0.2
 mccabe==0.6.1
 mistune==0.7.4
+more-itertools==4.3.0
 nbconvert==5.2.1
 nbformat==4.3.0
 networkx==1.11
@@ -39,12 +45,16 @@ pandas==0.20.3
 pandocfilters==1.4.1
 pexpect==4.2.1
 pickleshare==0.7.4
+pluggy==0.8.0
 prompt-toolkit==1.0.14
 psycopg2==2.6.2
 ptyprocess==0.5.2
+py==1.7.0
 Pygments==2.2.0
 pylint==1.6.5
 pyparsing==2.1.10
+pytest==4.0.1
+pytest-flask==0.14.0
 python-dateutil==2.6.0
 pytz==2017.2
 pyzmq==16.0.2
@@ -60,6 +70,7 @@ traitlets==4.3.2
 virtualenv==15.1.0
 wcwidth==0.1.7
 webencodings==0.5.1
+Werkzeug==0.14.1
 whitenoise==3.2
 widgetsnbextension==2.0.0
 wrapt==1.10.8
