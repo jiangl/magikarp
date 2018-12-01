@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
 from core_insure.assessor.home_assessor import HomeAssessor
 import random
+from ruamel.yaml import YAML
 
-def create_app():
+
+def create_app(config_file):
     app = Flask(__name__.split('.')[0])
-    assessor = HomeAssessor()
+    yaml = YAML()
+    config = yaml.load(config_file)
+    assessor = HomeAssessor(config.get('assessor'))
 
     @app.route('/')
     def test():
@@ -15,8 +19,8 @@ def create_app():
     def get_houses():
         # request.args (GET)
         # request.form.items()
-        latitude = request.form.get('latitude')
-        longitude = request.form.get('longitude')
+        latitude = float(request.form.get('latitude'))
+        longitude = float(request.form.get('longitude'))
 
         fake_house = {
             'house_id': 33242,
