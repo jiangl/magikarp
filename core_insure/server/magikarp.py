@@ -17,11 +17,10 @@ def create_app(config_file):
 
     @app.route('/get_houses', methods=['POST'])
     def get_houses():
-        # request.args (GET)
-        # request.form.items()
-        latitude = float(request.form.get('latitude'))
-        longitude = float(request.form.get('longitude'))
-
+        json_params = request.get_json()
+        latitude = json_params.get('latitude', 0)
+        longitude = json_params.get('longitude', 0)
+        # pull from db
         fake_house = {
             'house_id': 33242,
             'risk_score': 19,
@@ -34,6 +33,18 @@ def create_app(config_file):
         }
 
         return jsonify([fake_house])
+
+    @app.route('/update_attribute', methods=['POST'])
+    def update_attribute():
+        json_params = request.get_json()
+        attributes = json_params.get('attributes')
+        # update in db
+        # pull full db record
+        all_records = attributes
+        claim_pred = assessor.predict_from_attributes(all_records)
+        return claim_pred
+
+
 
     return app
 

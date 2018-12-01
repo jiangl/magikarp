@@ -4,7 +4,6 @@ assessor:
     <<: *base
     model: linear_regression
     linear_regression:
-        input_size: 1
         output_size: 1
         lr: 0.001
         momentum: 0.01

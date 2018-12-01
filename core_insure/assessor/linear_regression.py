@@ -1,6 +1,7 @@
 import torch
 from torch import nn, optim
 from torch.autograd import Variable
+from core_insure.assessor.base_model import BaseModel
 
 
 class LinearRegression(nn.Module):
@@ -13,13 +14,15 @@ class LinearRegression(nn.Module):
         return y
 
 
-class LinearRegressionModel():
+class LinearRegressionModel(BaseModel):
     def __init__(self, config):
         input_size = config.get('input_size', 1)
         output_size = config.get('output_size', 1)
         lr = config.get('lr', 0.001)
         momentum = config.get('momentum', 0.01)
 
+        # Huber? less sensitive to outliers, because it's bounded, same with L1 (MAE)
+        # Need to look at dataset to see if there are outliers
         self.loss = nn.MSELoss()
         self.model = LinearRegression(input_size, output_size)
         self.optimizer = optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)
@@ -41,7 +44,8 @@ class LinearRegressionModel():
 
     def eval(self, x):
         y_pred = self.model(self._torch_var(x))
-        return y_pred
+        formatted_y = y_pred.data.numpy()[0]
+        return formatted_y
 
     def save(self, filepath):
         torch.save(self.model.state_dict(), filepath)
