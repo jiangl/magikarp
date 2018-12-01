@@ -10,9 +10,10 @@ class DataLoader():
 
     def _get_values(self, primary_key_values):
         sql_command = ''
-        self.cursor.execute(sql_command)
-        records = self.cursor.fetchall()
-        return records
+        #self.cursor.execute(sql_command)
+        #records = self.cursor.fetchall()
+        #return records
+        return {}
 
     def _save_values(self, primary_keys_values, save_keys_values):
         pass

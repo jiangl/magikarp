@@ -11,7 +11,7 @@ def create_app(config_file):
     config = yaml.load(config_file)
 
     app = Flask(__name__.split('.')[0])
-    celery = Celery(app.name, broker=config.get('broker_url'))
+    celery = Celery(app.name, broker=config.get('celery').get('broker_url'))
     celery.config_from_object('celeryconfig')
 
     assessor = HomeAssessor(config.get('assessor'))
@@ -62,7 +62,7 @@ def create_app(config_file):
         dataloader.save_attributes(house_id, attributes)
         all_attributes = dataloader.load_attributes(house_id)
         claim_pred = assessor.predict_from_attributes(all_attributes)
-        return claim_pred
+        return jsonify({'claim_pred': float(claim_pred)})
 
     @app.route('/update_model', methods=['POST'])
     def update_model():
