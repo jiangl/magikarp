@@ -1,0 +1,18 @@
+.dashboardContainer {
+  background-color: #061253;
+  min-height: 20%;
+  padding: 20px;
+}
+
+.dashboardContainer > h4 {
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 0;
+}
+
+.statsContainer {
+  display: flex;
+  justify-content: space-between;
+}
