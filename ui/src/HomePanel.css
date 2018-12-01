@@ -1,0 +1,32 @@
+.homePanel {
+  height: 100%;
+  background-color: #061253;
+}
+
+.homePanel > img {
+  max-width: 100%;
+}
+
+.homeDetails {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cityAddr {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.detailValue {
+  margin-top: 10px;
+  color: #9db0e5;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.detailType {
+  color: #9db0e5;
+  font-size: 12px;
+}

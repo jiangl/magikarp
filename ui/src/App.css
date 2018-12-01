@@ -3,6 +3,7 @@
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   display: flex;
+  background-color: #061253;
 }
 
 .App > div {
@@ -27,4 +28,5 @@ h4 {
   letter-spacing: 1px;
   color: white;
   margin-bottom: 0;
+  margin-top: 10px;
 }
