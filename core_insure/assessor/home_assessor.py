@@ -43,9 +43,9 @@ class HomeAssessor():
 
     def train(self, dataset):
         # repairAmount
-        for input, label in dataset:
+        for x, y in dataset:
             # batch?
-            self.model.train(input, label)
+            self.model.train(x, y)
         self.model.save(self.filepath)
 
     def predict_from_attributes(self, attributes):
