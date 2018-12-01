@@ -4,7 +4,8 @@ import json
 
 @pytest.fixture
 def client():
-    app = create_app()
+    config_file = open('./config.yaml', 'r')
+    app = create_app(config_file)
     return app.test_client()
 
 @pytest.fixture
@@ -30,13 +31,15 @@ def test_basic(client):
 
 def test_get_houses(client, fake_house):
     extra_data = dict(
-        latitude=17,
+        latitude=7,
         longitude=20
     )
+    fake_house.update(extra_data)
+
     output = client.post('/get_houses', data=extra_data)
     status = output.status_code
     values = json.loads(output.data)
-    expected_output = [fake_house.update(extra_data)]
+    expected_output = [fake_house]
 
     assert status == 200
     assert values == expected_output
