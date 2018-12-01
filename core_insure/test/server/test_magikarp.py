@@ -1,5 +1,6 @@
 import pytest
 from core_insure.server.magikarp import create_app
+from core_insure.assessor.home_assessor import Attributes
 import json
 
 @pytest.fixture
@@ -36,10 +37,29 @@ def test_get_houses(client, fake_house):
     )
     fake_house.update(extra_data)
 
-    output = client.post('/get_houses', data=extra_data)
+    output = client.post('/get_houses', json=extra_data)
     status = output.status_code
     values = json.loads(output.data)
     expected_output = [fake_house]
 
     assert status == 200
     assert values == expected_output
+
+def test_update_attributes(client):
+    # fake_attributes = {
+    #     Attributes.ZIPCODE: '02116',
+    #     Attributes.FLOOD_DAMAGE: '0',
+    #     Attributes.ROOF_DAMAGE: '1',
+    #     Attributes.INCOME: '34232'
+    # }
+    fake_features = {
+        'ZIPCODE': 11226,
+        'FLOOD_DAMAGE': 0,
+        'ROOF_DAMAGE': 1,
+        'INCOME': 34233
+    }
+
+    output = client.post('/update_attribute', json=dict(attributes=fake_features))
+    status = output.status_code
+    values = output.data
+    assert status == 200
