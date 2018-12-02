@@ -5,7 +5,10 @@
   display: flex;
   background-color: #061253;
 }
-
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 1px;
+}
 .App > div {
   height: 100%;
 }

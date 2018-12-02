@@ -7,11 +7,13 @@ export default class HouseFeature extends React.Component {
     super(props);
     this.state = {
       isEditing: false,
-      newSeverity: props.severity
+      newSeverity: props.severity,
+      isVerified: false
     };
     this.onSeverityClick = this.onSeverityClick.bind(this);
     this.onSeverityChange = this.onSeverityChange.bind(this);
     this.saveSeverityChange = this.saveSeverityChange.bind(this);
+    this.verify = this.verify.bind(this);
     this.inputRef = null;
   }
   componentDidUpdate() {
@@ -29,10 +31,16 @@ export default class HouseFeature extends React.Component {
       this.state.newSeverity !== this.props.severity &&
       this.props.handleSeverityChange(newSeverity);
     this.setState({ isEditing: false });
+    this.verify();
+  }
+  verify() {
+    this.setState({
+      isVerified: true
+    });
   }
   render() {
     const { src, feature, severity, onRowClick } = this.props;
-    const hasSeverity = severity >= 0;
+    const hasSeverity = !isNaN(severity);
     return (
       <div className="houseFeature" onClick={onRowClick}>
         <span className="src">{src}</span>
@@ -55,6 +63,9 @@ export default class HouseFeature extends React.Component {
             />
           </span>
         )}
+        <span className="verified">
+          {this.state.isVerified ? <svg onClick={this.verify} /> : <svg />}
+        </span>
       </div>
     );
   }

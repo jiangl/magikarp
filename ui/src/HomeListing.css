@@ -23,15 +23,6 @@
   overflow-y: scroll;
 }
 
-.listingContainer::-webkit-scrollbar {
-  width: 5px;
-  border-radius: 1px;
-}
-
-.listingContainer::-webkit-scrollbar-thumb {
-  background: #666;
-}
-
 .divider {
   margin: 10px 0;
   height: 1px;
