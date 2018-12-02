@@ -41,7 +41,6 @@ def test_get_houses(client, fake_house):
     status = output.status_code
     values = json.loads(output.data)
     expected_output = [fake_house]
-
     assert status == 200
     assert values == expected_output
 

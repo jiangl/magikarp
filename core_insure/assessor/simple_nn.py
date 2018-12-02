@@ -27,8 +27,6 @@ class NNModel(BaseModel):
         lr = config.get('lr', 0.001)
         hidden_size = config.get('hidden_size', 100)
 
-        # Huber? less sensitive to outliers, because it's bounded, same with L1 (MAE)
-        # Need to look at dataset to see
         # self.loss = nn.MSELoss()
         self.loss = nn.SmoothL1Loss()
         self.model = FFNN(input_size, output_size, hidden_size)
@@ -38,25 +36,21 @@ class NNModel(BaseModel):
     def _torch_var(self, value):
         return Variable(torch.Tensor(value))
 
-    def train(self, x_inputs, y_labels):
-        epoch_loss = []
+    def train(self, x_inputs, y_labels, x_val=None, y_val=None):
         for epoch in range(self.epochs):
             y_pred = self.model(self._torch_var(x_inputs))
             loss = self.loss(y_pred, self._torch_var(y_labels))
-            epoch_loss.append(loss.data[0])
 
-            print(f'Epoch {epoch}, Loss: {loss}, y_pred preview: {y_pred.data[0]}')
-            # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
+            val_loss = 0
+            if x_val and y_val:
+                y_pred_val = self.model(self._torch_var(x_val))
+                val_loss = self.loss(y_pred_val, self._torch_var(y_val))
+
+            print(f'Epoch {epoch}, Train_Loss: {loss}, Val_Loss: {val_loss}')
 
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
-
-        return {
-            'epoch_loss': epoch_loss,
-            'final y_pred': y_pred,
-            'y_actual': y_labels
-        }
 
     def eval(self, x):
         y_pred = self.model(self._torch_var(x))

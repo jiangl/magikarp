@@ -12,12 +12,9 @@ class Attributes(Enum):
     foundationDamageAmount = auto()
     floodDamageAmount = auto()
     waterLevel = auto()
-    destroyed = auto()
-    habitabilityRepairsRequired = auto()
     rentalAssistanceAmount = auto()
     rpfvl = auto()
     ppfvl = auto()
-    personalPropertyEligible = auto()
 
 
 class HomeAssessor():
@@ -51,10 +48,9 @@ class HomeAssessor():
     def save(self):
         self.model.save(self.filepath)
 
-    def train(self, inputs, labels):
-        train_output = self.model.train(inputs, labels)
+    def train(self, inputs, labels, input_val=None, label_val=None):
+        self.model.train(inputs, labels, input_val, label_val)
         self.model.save(self.filepath)
-        return train_output
 
     def predict_from_attributes(self, attributes):
         features = self._featurize_attributes(attributes)
