@@ -1,4 +1,5 @@
 import React from 'react';
+import HouseFeature from './HouseFeature';
 
 import './HomePanel.css';
 
@@ -20,7 +21,15 @@ const HomePanel = ({ streetAddr, cityAddr, cost, confidence, features }) => {
         </div>
       </div>
       <img src="images/house1.png" />
-      <div className="homeFeatures" />
+      <div className="homeFeatures">
+        <HouseFeature
+          handleSeverityChange={() => console.log('handleSeverityChange')}
+          src="txt"
+          feature="waterLevel"
+          severity={7}
+          onRowClick={() => console.log('handleRowClick')}
+        />
+      </div>
     </div>
   );
 };

@@ -6,6 +6,10 @@
   font-size: 14px;
 }
 
+.homeInfo:hover {
+  cursor: pointer;
+}
+
 .homeInfo.high > .address {
   color: #697afe;
 }
