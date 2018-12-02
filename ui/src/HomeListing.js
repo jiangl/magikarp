@@ -3,7 +3,11 @@ import HomeInfo from './HomeInfo';
 
 import './HomeListing.css';
 
-const HomeListing = ({ highConfidenceHomes, lowConfidenceHomes }) => {
+const HomeListing = ({
+  highConfidenceHomes,
+  lowConfidenceHomes,
+  selectHome
+}) => {
   return (
     <div className="homeListing">
       <h4>Homes</h4>
@@ -14,7 +18,13 @@ const HomeListing = ({ highConfidenceHomes, lowConfidenceHomes }) => {
       </div>
       <div className="listingContainer">
         {highConfidenceHomes.map(home => {
-          return <HomeInfo {...home} confidenceLevel="high" />;
+          return (
+            <HomeInfo
+              {...home}
+              confidenceLevel="high"
+              onClick={() => selectHome(home.address)}
+            />
+          );
         })}
       </div>
       <div className="divider">
@@ -22,8 +32,14 @@ const HomeListing = ({ highConfidenceHomes, lowConfidenceHomes }) => {
         <span>{'<70'}</span>
       </div>
       <div className="listingContainer">
-        {highConfidenceHomes.map(home => {
-          return <HomeInfo {...home} confidenceLevel="low" />;
+        {lowConfidenceHomes.map(home => {
+          return (
+            <HomeInfo
+              {...home}
+              confidenceLevel="low"
+              onClick={() => selectHome(home.address)}
+            />
+          );
         })}
       </div>
     </div>

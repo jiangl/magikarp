@@ -4,43 +4,43 @@ import FeaturePanel from './FeaturePanel';
 
 import './HomePanel.css';
 
-const HomePanel = ({ streetAddr, cityAddr, cost, confidence, features }) => {
-  return (
-    <div className="homePanel">
-      <div className="homeDetails">
-        <div>
-          <h4>{streetAddr}</h4>
-          <span className="cityAddr">{cityAddr}</span>
+class HomePanel extends React.Component {
+  render() {
+    const {
+      address,
+      cost,
+      confidence,
+      featureList,
+      verify,
+      changeSeverity
+    } = this.props;
+    return (
+      <div className="homePanel">
+        <div className="homeDetails">
+          <div>
+            <h4>{address}</h4>
+            <span className="cityAddr">Miami, Florida</span>
+          </div>
+          <div>
+            <div className="detailValue">{`$${cost}k`}</div>
+            <div className="detailType">damage</div>
+          </div>
+          <div>
+            <div className="detailValue">{`${confidence}%`}</div>
+            <div className="detailType">confidence</div>
+          </div>
         </div>
-        <div>
-          <div className="detailValue">{`$${cost}k`}</div>
-          <div className="detailType">damage</div>
-        </div>
-        <div>
-          <div className="detailValue">{`${confidence}%`}</div>
-          <div className="detailType">features</div>
+        <img src="images/house1.png" />
+        <div className="homeFeatures">
+          <FeaturePanel
+            featureList={featureList}
+            verify={verify}
+            changeSeverity={changeSeverity}
+          />
         </div>
       </div>
-      <img src="images/house1.png" />
-      <div className="homeFeatures">
-        <FeaturePanel
-          featureList={Array(20)
-            .fill({
-              src: 'txt',
-              feature: 'waterLevel',
-              severity: 7
-            })
-            .fill(
-              {
-                src: 'img',
-                feature: 'waterLevel'
-              },
-              15
-            )}
-        />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default HomePanel;
