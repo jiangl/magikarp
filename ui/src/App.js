@@ -115,13 +115,15 @@ const getClaimTotal = featureList => {
   return featureList.reduce(claimPerFeature, 0);
 };
 
-const getConfidence = (featureList, baseConfidence) => {
+const getConfidence = (featureList, prevFeatureList, baseConfidence) => {
   //will make api call in future
   const confidencePerFeature = (accumulator, feature) => {
     const addConfidence = feature.isVerified ? 2 : 0;
     return accumulator + addConfidence;
   };
-  return featureList.reduce(confidencePerFeature, baseConfidence);
+  const newFeatureConfidence = featureList.reduce(confidencePerFeature, 0);
+  const oldFeatureConfidence = prevFeatureList.reduce(confidencePerFeature, 0);
+  return newFeatureConfidence - oldFeatureConfidence + baseConfidence;
 };
 
 const generateHomes = () =>
@@ -163,7 +165,26 @@ class App extends Component {
         ...newFeatureList[i],
         isVerified: isVerified || !newFeatureList[i].isVerified
       };
-      return { featureList: newFeatureList };
+      const newHomes = prevState.homes.slice(0);
+      const i2 = newHomes.findIndex(
+        home => home.address === prevState.selectedHouse.address
+      );
+      const newConfidence = getConfidence(
+        newFeatureList,
+        prevState.featureList,
+        newHomes[i2].confidencePercentile
+      );
+      newHomes[i2] = {
+        ...newHomes[i2],
+        features: newFeatureList,
+        confidencePercentile: newConfidence,
+        confidenceType: newConfidence > 70 ? 'high' : 'low'
+      };
+      return {
+        featureList: newFeatureList,
+        selectedHouse: newHomes[i2],
+        homes: newHomes
+      };
     });
   }
   changeSeverity(featureName, severity) {
@@ -196,10 +217,7 @@ class App extends Component {
     });
   }
   render() {
-    const confidence = getConfidence(
-      this.state.featureList,
-      this.state.selectedHouse.confidencePercentile
-    );
+    const confidence = this.state.selectedHouse.confidencePercentile;
     const claimTotal = getClaimTotal(this.state.featureList);
     const homeDetails = this.state.selectedHouse;
     homeDetails.cost = claimTotal;
