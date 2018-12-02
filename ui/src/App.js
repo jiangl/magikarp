@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard';
 import HomePanel from './HomePanel';
 import HomeListing from './HomeListing';
+import Map from './Map';
 
 const mockHighConfidence = Array(20).fill({
   address: '47 Tehama',
@@ -30,6 +30,9 @@ class App extends Component {
       <div className="App">
         <div className="left-panel">
           <Dashboard />
+          <div className="mapContainer">
+            <Map />
+          </div>
         </div>
         <div className="middle-panel">
           <HomeListing
