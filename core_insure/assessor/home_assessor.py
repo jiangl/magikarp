@@ -51,7 +51,7 @@ class HomeAssessor():
         model_config = config[self.model_type]
         if self.model_type == 'linear_regression':
             # model_config['input_size'] = len(Attributes)
-            model_config['input_size'] = 8
+            model_config['input_size'] = 1
             self.model = LinearRegressionModel(model_config)
         elif self.model_type == 'simple_nn':
             model_config['input_size'] = len(Attributes)

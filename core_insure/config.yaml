@@ -5,8 +5,8 @@ assessor:
     model: linear_regression
     linear_regression:
         output_size: 1
-        lr: 0.01
-        momentum: 0.001
+        lr: 1e-5
+        momentum: 0
         epochs: 500
     simple_nn:
         output_size: 1
