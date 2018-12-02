@@ -1,7 +1,7 @@
 import torch
 from torch import nn, optim
 from torch.autograd import Variable
-from core_insure.assessor.base_model import BaseModel
+from assessor.base_model import BaseModel
 
 
 class LinearRegression(nn.Module):

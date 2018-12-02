@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from core_insure.assessor.home_assessor import HomeAssessor
-from core_insure.dataio.dataloader import DataLoader
+from assessor.home_assessor import HomeAssessor
+from dataio.dataloader import DataLoader
 import random
 from ruamel.yaml import YAML
 from celery import Celery
@@ -11,6 +11,8 @@ def create_app(config_file):
     config = yaml.load(config_file)
 
     app = Flask(__name__.split('.')[0])
+    print('app.name')
+    import pdb; pdb.set_trace()
     celery = Celery(app.name, broker=config.get('celery').get('broker_url'))
     celery.config_from_object('celeryconfig')
 
