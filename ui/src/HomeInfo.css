@@ -20,6 +20,8 @@
 
 .address {
   flex: 1;
+  height: 16px;
+  overflow-y: hidden;
 }
 
 .cost {

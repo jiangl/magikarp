@@ -7,17 +7,18 @@ export default class HouseFeature extends React.Component {
     super(props);
     this.state = {
       isEditing: false,
-      newSeverity: props.severity,
-      isVerified: false
+      newSeverity: props.severity
     };
     this.onSeverityClick = this.onSeverityClick.bind(this);
     this.onSeverityChange = this.onSeverityChange.bind(this);
     this.saveSeverityChange = this.saveSeverityChange.bind(this);
-    this.verify = this.verify.bind(this);
     this.inputRef = null;
   }
   componentDidUpdate() {
     this.inputRef && this.inputRef.focus();
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ newSeverity: nextProps.severity });
   }
   onSeverityClick() {
     this.setState({ isEditing: true });
@@ -29,14 +30,8 @@ export default class HouseFeature extends React.Component {
     const { newSeverity } = this.state;
     newSeverity >= 0 &&
       this.state.newSeverity !== this.props.severity &&
-      this.props.handleSeverityChange(newSeverity);
+      this.props.handleSeverityChange(this.props.feature, newSeverity);
     this.setState({ isEditing: false });
-    this.verify();
-  }
-  verify() {
-    this.setState(currState => ({
-      isVerified: !currState.isVerified
-    }));
   }
   render() {
     const { src, feature, severity, onRowClick } = this.props;
@@ -46,7 +41,7 @@ export default class HouseFeature extends React.Component {
         <span className="src">{src}</span>
         <span
           className={
-            this.state.isVerified ? 'feature' : 'feature noVerification'
+            this.props.isVerified ? 'feature' : 'feature noVerification'
           }
         >
           {feature}
@@ -68,10 +63,16 @@ export default class HouseFeature extends React.Component {
           </span>
         )}
         <span className="verified">
-          {this.state.isVerified ? (
-            <img onClick={this.verify} src="/images/checkSelected.png" />
+          {this.props.isVerified ? (
+            <img
+              onClick={() => this.props.verify(feature)}
+              src="/images/checkSelected.png"
+            />
           ) : (
-            <img onClick={this.verify} src="/images/checkUnselected.png" />
+            <img
+              onClick={() => this.props.verify(feature)}
+              src="/images/checkUnselected.png"
+            />
           )}
         </span>
       </div>
