@@ -74,7 +74,7 @@ Currently, we're using a two-layer feed forward neural network with a ReLu as th
 This model was compared against a baseline linear regression model and seemed to perform slightly better due to the extra capabilities captured by the non-linearity.
 
 The [dataset](https://www.fema.gov/openfema-dataset-individual-assistance-housing-registrants-large-disasters-v1) of housing assistance during large disaster from the FEMA site was used.
-Two 70-20-10 train/test/val splits were made.The size of each set of 10,000; increasing the data size did not dramatically change model performance. The two sets consisted of:
+Three 70-20-10 train/test/val splits were made. The total size of the data used was 100,000 sets of disaster housing claims; increasing the data size did not dramatically change model performance. Two different filters of the data were used:
 1) The full dataset of both approved and rejected claims
 2) A subset of only approved claims
 
