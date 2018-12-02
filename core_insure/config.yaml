@@ -8,14 +8,14 @@ celery:
     broker_url: amqp://localhost
 assessor:
     <<: *base
-    model: linear_regression
+    model: simple_nn
     linear_regression:
         output_size: 1
         lr: 1e-5
         momentum: 0
-        epochs: 500
+        epochs: 8000
     simple_nn:
         output_size: 1
         lr: 1e-5
-        epochs: 500
+        epochs: 9000
         hidden_size: 50

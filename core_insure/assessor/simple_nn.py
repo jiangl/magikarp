@@ -2,7 +2,7 @@ import torch
 from torch import nn, optim
 from torch.autograd import Variable
 import torch.nn.functional as F
-from core_insure.assessor.base_model import BaseModel
+from assessor.base_model import BaseModel
 import os
 
 
@@ -27,7 +27,6 @@ class NNModel(BaseModel):
         lr = config.get('lr', 0.001)
         hidden_size = config.get('hidden_size', 100)
 
-        # self.loss = nn.MSELoss()
         self.loss = nn.SmoothL1Loss()
         self.model = FFNN(input_size, output_size, hidden_size)
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)

@@ -1,10 +1,8 @@
 import torch
 from torch import nn, optim
 from torch.autograd import Variable
-import torch.nn.functional as F
-from core_insure.assessor.base_model import BaseModel
+from assessor.base_model import BaseModel
 import os
-import numpy as np
 
 
 class LinearRegression(nn.Module):
@@ -25,7 +23,6 @@ class LinearRegressionModel(BaseModel):
         momentum = config.get('momentum', 0)
         self.epochs = config.get('epochs', 100)
 
-        # self.loss = nn.MSELoss()
         self.loss = nn.SmoothL1Loss()
         self.model = LinearRegression(input_size, output_size)
         self.optimizer = optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)

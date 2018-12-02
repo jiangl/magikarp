@@ -3,6 +3,10 @@ from core_insure.server.magikarp import create_app
 from core_insure.assessor.home_assessor import Attributes
 import json
 
+
+# TODO: Out of date as of 12/02/2018.
+# Initially used to make sure server was receiving and processing requests correctly
+# Need to update
 @pytest.fixture
 def client():
     config_file = open('./config.yaml', 'r')
