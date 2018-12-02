@@ -10,7 +10,6 @@ const HomeInfo = ({
   confidencePercentile,
   confidenceLevel
 }) => {
-  console.log('onClick', onClick);
   return (
     <div className={`homeInfo ${confidenceLevel}`} onClick={onClick}>
       <span className="address">{address}</span>

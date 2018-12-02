@@ -154,6 +154,7 @@ class App extends Component {
     this.verifyFeature = this.verifyFeature.bind(this);
     this.changeSeverity = this.changeSeverity.bind(this);
     this.selectHome = this.selectHome.bind(this);
+    this.changeCost = this.changeCost.bind(this);
   }
   verifyFeature(featureName, isVerified) {
     this.setState(prevState => {
@@ -217,7 +218,6 @@ class App extends Component {
     });
   }
   selectHome(address) {
-    console.log('selecting', address);
     this.setState(prevState => {
       const i = prevState.homes.findIndex(
         feature => feature.address === address
@@ -230,11 +230,23 @@ class App extends Component {
       return prevState;
     });
   }
+  changeCost(cost) {
+    this.setState(prevState => {
+      const newHomes = prevState.homes.slice(0);
+      const i2 = newHomes.findIndex(
+        home => home.address === prevState.selectedHouse.address
+      );
+      newHomes[i2] = {
+        ...newHomes[i2],
+        cost
+      };
+      return { homes: newHomes, selectedHouse: newHomes[i2] };
+    });
+    setTimeout(() => {}, 5000);
+  }
   render() {
     const confidence = this.state.selectedHouse.confidencePercentile;
-    const claimTotal = getClaimTotal(this.state.featureList);
     const homeDetails = this.state.selectedHouse;
-    homeDetails.cost = claimTotal;
     homeDetails.confidence = confidence;
 
     const highConfidenceHomes = this.state.homes.filter(
@@ -243,7 +255,6 @@ class App extends Component {
     const lowConfidenceHomes = this.state.homes.filter(
       home => home.confidenceType !== 'high'
     );
-    console.log('highConfidenceHomes', highConfidenceHomes);
     return (
       <div className="content">
         <div className="topBar">
@@ -282,6 +293,7 @@ class App extends Component {
               verify={this.verifyFeature}
               featureList={this.state.featureList}
               changeSeverity={this.changeSeverity}
+              handleCostChange={this.changeCost}
             />
           </div>
         </div>
