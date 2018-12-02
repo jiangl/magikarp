@@ -1,4 +1,6 @@
 import React from 'react';
+import HouseFeature from './HouseFeature';
+import FeaturePanel from './FeaturePanel';
 
 import './HomePanel.css';
 
@@ -20,7 +22,23 @@ const HomePanel = ({ streetAddr, cityAddr, cost, confidence, features }) => {
         </div>
       </div>
       <img src="images/house1.png" />
-      <div className="homeFeatures" />
+      <div className="homeFeatures">
+        <FeaturePanel
+          featureList={Array(20)
+            .fill({
+              src: 'txt',
+              feature: 'waterLevel',
+              severity: 7
+            })
+            .fill(
+              {
+                src: 'img',
+                feature: 'waterLevel'
+              },
+              15
+            )}
+        />
+      </div>
     </div>
   );
 };

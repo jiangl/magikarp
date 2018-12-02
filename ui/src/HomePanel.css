@@ -30,3 +30,7 @@
   color: #9db0e5;
   font-size: 12px;
 }
+
+.homeFeatures {
+  height: calc(100% - 360px);
+}

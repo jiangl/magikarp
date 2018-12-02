@@ -10,14 +10,17 @@ const HomeListing = ({ highConfidenceHomes, lowConfidenceHomes }) => {
       <div className="listingHeaders">
         <span>Address</span>
         <span>Cost</span>
-        <span>Confidence</span>
+        <span>{'70-100'}</span>
       </div>
       <div className="listingContainer">
         {highConfidenceHomes.map(home => {
           return <HomeInfo {...home} confidenceLevel="high" />;
         })}
       </div>
-      <div className="divider" />
+      <div className="divider">
+        <span>Confidence less than</span>
+        <span>{'<70'}</span>
+      </div>
       <div className="listingContainer">
         {highConfidenceHomes.map(home => {
           return <HomeInfo {...home} confidenceLevel="low" />;

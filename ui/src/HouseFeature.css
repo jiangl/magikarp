@@ -1,0 +1,52 @@
+.houseFeature {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.houseFeature:hover {
+  cursor: pointer;
+}
+
+.houseFeature > * {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.houseFeature > .verified > img {
+  height: 15px;
+  width: 15px;
+}
+
+.verified {
+  text-align: center;
+}
+
+.src {
+  flex: 1 0 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.feature {
+  flex: 3 0 0;
+  color: #697afe;
+}
+
+.feature.noVerification {
+  color: #c692ff;
+}
+
+.severity {
+  flex: 1 0 0;
+  color: white;
+  text-align: center;
+}
+
+.severityEdit {
+  width: 15px;
+}
+
+.verified {
+  flex: 1 0 0;
+}
