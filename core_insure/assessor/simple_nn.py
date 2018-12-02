@@ -24,12 +24,13 @@ class NNModel(BaseModel):
     def __init__(self, config):
         input_size = config.get('input_size', 1)
         output_size = config.get('output_size', 1)
-        lr = config.get('lr', 0.01)
+        lr = config.get('lr', 0.001)
         hidden_size = config.get('hidden_size', 100)
 
         # Huber? less sensitive to outliers, because it's bounded, same with L1 (MAE)
         # Need to look at dataset to see
-        self.loss = nn.MSELoss()
+        # self.loss = nn.MSELoss()
+        self.loss = nn.SmoothL1Loss()
         self.model = FFNN(input_size, output_size, hidden_size)
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
         self.epochs = config.get('epochs', 100)
@@ -59,7 +60,7 @@ class NNModel(BaseModel):
 
     def eval(self, x):
         y_pred = self.model(self._torch_var(x))
-        formatted_y = y_pred.data.numpy()[0]
+        formatted_y = y_pred.data.numpy()
         return formatted_y
 
     def save(self, filepath):

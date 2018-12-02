@@ -8,38 +8,16 @@ import numpy as np
 
 # eventually dynamically pulled from db, retrain when new attribute arises
 class Attributes(Enum):
-    censusBlockId = auto()
-    censusYear = auto()
-    damagedZipCode = auto()
-    destroyed = auto()
-    disasterNumber = auto()
-    floodDamage = auto()
-    floodInsurance = auto()
-    foundationDamage = auto()
-    foundationDamageAmount = auto()
-    grossIncome = auto()
-    habitabilityRepairsRequired = auto()
-    homeOwnersInsurance = auto()
-    householdComposition = auto()
-    inspected = auto()
-    personalPropertyEligible = auto()
-    ppfvl = auto()
-    primaryResidence = auto()
-    rentalAssistanceAmount = auto()
-    rentalAssistanceEligible = auto()
-    rentalResourceZipCode = auto()
-    repairAmount = auto()
-    repairAssistanceEligible = auto()
-    replacementAmount = auto()
-    replacementAssistanceEligible = auto()
-    roofDamage = auto()
     roofDamageAmount = auto()
-    rpfvl = auto()
-    sbaEligible = auto()
-    specialNeeds = auto()
-    tsaCheckedIn = auto()
-    tsaEligible = auto()
+    foundationDamageAmount = auto()
+    floodDamageAmount = auto()
     waterLevel = auto()
+    destroyed = auto()
+    habitabilityRepairsRequired = auto()
+    rentalAssistanceAmount = auto()
+    rpfvl = auto()
+    ppfvl = auto()
+    personalPropertyEligible = auto()
 
 
 class HomeAssessor():
@@ -49,12 +27,10 @@ class HomeAssessor():
         self.model_type = config.get('model', 'linear_regression')
         self.model_path = os.path.join(self.filepath, self.model_type)
         model_config = config[self.model_type]
+        model_config['input_size'] = len(Attributes)
         if self.model_type == 'linear_regression':
-            # model_config['input_size'] = len(Attributes)
-            model_config['input_size'] = 1
             self.model = LinearRegressionModel(model_config)
         elif self.model_type == 'simple_nn':
-            model_config['input_size'] = len(Attributes)
             self.model = NNModel(model_config)
         else:
             raise ValueError('model type unknown.')

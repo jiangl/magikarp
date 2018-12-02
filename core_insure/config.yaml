@@ -10,6 +10,6 @@ assessor:
         epochs: 500
     simple_nn:
         output_size: 1
-        lr: 0.001
+        lr: 1e-5
         epochs: 500
         hidden_size: 50
