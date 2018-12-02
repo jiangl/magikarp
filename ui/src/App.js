@@ -126,21 +126,37 @@ const getConfidence = (featureList, prevFeatureList, baseConfidence) => {
   return newFeatureConfidence - oldFeatureConfidence + baseConfidence;
 };
 
-const generateHomes = () =>
-  streetNames.map(streetName => {
-    const houseNumber = Math.floor(Math.random() * 999);
+const generateHomes = homes => {
+  if (!homes) {
+    return streetNames.map(streetName => {
+      const houseNumber = Math.floor(Math.random() * 999);
+      const baseConfidence = Math.floor(Math.random() * 40) + 40;
+      const features = initialFeatureList.map(feature => {
+        return { ...feature, severity: Math.floor(Math.random() * 10) };
+      });
+      return {
+        address: houseNumber + ' ' + streetName,
+        cost: getClaimTotal(features),
+        confidencePercentile: baseConfidence,
+        confidenceType: baseConfidence > 70 ? 'high' : 'low',
+        features: features
+      };
+    });
+  }
+  return homes.map(home => {
     const baseConfidence = Math.floor(Math.random() * 40) + 40;
     const features = initialFeatureList.map(feature => {
       return { ...feature, severity: Math.floor(Math.random() * 10) };
     });
     return {
-      address: houseNumber + ' ' + streetName,
+      address: home.address,
       cost: getClaimTotal(features),
       confidencePercentile: baseConfidence,
       confidenceType: baseConfidence > 70 ? 'high' : 'low',
       features: features
     };
   });
+};
 
 class App extends Component {
   constructor(props) {
@@ -240,9 +256,16 @@ class App extends Component {
         ...newHomes[i2],
         cost
       };
+      setTimeout(() => {
+        const genHomes = generateHomes(this.state.homes);
+        const i = genHomes.findIndex(
+          home => home.address === newHomes[i2].address
+        );
+        genHomes[i] = newHomes[i2];
+        this.setState({ homes: genHomes });
+      }, 5000);
       return { homes: newHomes, selectedHouse: newHomes[i2] };
     });
-    setTimeout(() => {}, 5000);
   }
   render() {
     const confidence = this.state.selectedHouse.confidencePercentile;
