@@ -44,7 +44,8 @@ class NNModel(BaseModel):
             loss = self.loss(y_pred, self._torch_var(y_labels))
             epoch_loss.append(loss.data[0])
 
-            print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
+            print(f'Epoch {epoch}, Loss: {loss}, y_pred preview: {y_pred.data[0]}')
+            # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
 
             self.optimizer.zero_grad()
             loss.backward()

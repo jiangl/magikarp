@@ -36,21 +36,29 @@ class LinearRegressionModel(BaseModel):
     def train(self, x_inputs, y_labels):
         epoch_loss = []
         for epoch in range(self.epochs):
-            #for x, y in zip(x_inputs, y_labels):
             y_pred = self.model(self._torch_var(x_inputs))
             loss = self.loss(y_pred, self._torch_var(y_labels))
             epoch_loss.append(loss.data[0])
-
-            print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
-
+            print(f'Epoch {epoch}, Loss: {loss}, y_pred preview: {y_pred.data[0]}')
+            # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
-
+            # epoch_loss = 0
+            # for x, y in zip(x_inputs, y_labels):
+            #     y_pred = self.model(self._torch_var(x))
+            #     # import pdb; pdb.set_trace()
+            #     loss = self.loss(y_pred, self._torch_var(y))
+            #     epoch_loss = loss.data[0]
+            #     # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
+            #     self.optimizer.zero_grad()
+            #     loss.backward()
+            #     self.optimizer.step()
+            # print(f'Epoch {epoch}, Loss: {epoch_loss}')
         return {
             'epoch_loss': epoch_loss,
-            'final y_pred': y_pred,
-            'y_actual': y_labels
+            'y_pred': y_pred,
+            'y_true': y_labels
         }
 
     def eval(self, x):
