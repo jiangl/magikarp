@@ -199,7 +199,21 @@ class App extends Component {
         src: newFeatureList[i].src !== '-' ? newFeatureList[i].src : 'usr',
         isVerified: true
       };
-      return { featureList: newFeatureList };
+      const newHomes = prevState.homes.slice(0);
+      const i2 = newHomes.findIndex(
+        home => home.address === prevState.selectedHouse.address
+      );
+      const newCost = getClaimTotal(newFeatureList);
+      newHomes[i2] = {
+        ...newHomes[i2],
+        features: newFeatureList,
+        cost: newCost
+      };
+      return {
+        featureList: newFeatureList,
+        selectHome: newHomes[i2],
+        homes: newHomes
+      };
     });
   }
   selectHome(address) {
