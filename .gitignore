@@ -139,3 +139,4 @@ dmypy.json
 
 # Other things
 .idea/
+data/

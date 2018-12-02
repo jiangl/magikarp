@@ -1,10 +1,13 @@
 import torch
 from torch import nn, optim
 from torch.autograd import Variable
+<<<<<<< HEAD
 import torch.nn.functional as F
 from core_insure.assessor.base_model import BaseModel
 import os
-import numpy as np
+=======
+from assessor.base_model import BaseModel
+>>>>>>> master
 
 
 class LinearRegression(nn.Module):
@@ -23,32 +26,47 @@ class LinearRegressionModel(BaseModel):
         output_size = config.get('output_size', 1)
         lr = config.get('lr', 0.001)
         momentum = config.get('momentum', 0)
-        self.epochs = config.get('epochs', 100)
 
+        # Huber? less sensitive to outliers, because it's bounded, same with L1 (MAE)
+        # Need to look at dataset to see
+        #self.loss = F.mse_loss
         # self.loss = nn.MSELoss()
         self.loss = nn.SmoothL1Loss()
+        # self.loss = nn.KLDivLoss()
         self.model = LinearRegression(input_size, output_size)
         self.optimizer = optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)
-
+        self.epochs = config.get('epochs', 100)
 
     def _torch_var(self, value):
         return Variable(torch.Tensor(value))
 
-    def train(self, x_inputs, y_labels, x_val=None, y_val=None):
+    def train(self, x_inputs, y_labels):
+        epoch_loss = []
         for epoch in range(self.epochs):
             y_pred = self.model(self._torch_var(x_inputs))
             loss = self.loss(y_pred, self._torch_var(y_labels))
-
-            val_loss = 0
-            if x_val and y_val:
-                y_pred_val = self.model(self._torch_var(x_val))
-                val_loss = self.loss(y_pred_val, self._torch_var(y_val))
-
-            print(f'Epoch {epoch}, Train_Loss: {loss}, Val_Loss: {val_loss}')
-
+            epoch_loss.append(loss.data[0])
+            print(f'Epoch {epoch}, Loss: {loss}, y_pred preview: {y_pred.data[0]}')
+            # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
+            # epoch_loss = 0
+            # for x, y in zip(x_inputs, y_labels):
+            #     y_pred = self.model(self._torch_var(x))
+            #     # import pdb; pdb.set_trace()
+            #     loss = self.loss(y_pred, self._torch_var(y))
+            #     epoch_loss = loss.data[0]
+            #     # print(f'Epoch {epoch}, Loss: {loss}, y_pred: {y_pred}, y_labels: {y_labels}')
+            #     self.optimizer.zero_grad()
+            #     loss.backward()
+            #     self.optimizer.step()
+            # print(f'Epoch {epoch}, Loss: {epoch_loss}')
+        return {
+            'epoch_loss': epoch_loss,
+            'y_pred': y_pred,
+            'y_true': y_labels
+        }
 
     def eval(self, x):
         y_pred = self.model(self._torch_var(x))

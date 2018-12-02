@@ -41,16 +41,15 @@ def test_get_houses(client, fake_house):
     status = output.status_code
     values = json.loads(output.data)
     expected_output = [fake_house]
-
     assert status == 200
     assert values == expected_output
 
 def test_update_attributes(client):
     fake_features = {
-        'ZIPCODE': 11226,
-        'FLOOD_DAMAGE': 0,
-        'ROOF_DAMAGE': 1,
-        'INCOME': 34233
+        'damagedZipCode': 11226,
+        'floodDamage': 0,
+        'roofDamage': 1,
+        'grossIncome': 34233
     }
 
     output = client.post('/update_attribute', json=dict(house_id=0,

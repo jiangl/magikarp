@@ -1,30 +1,34 @@
-from .linear_regression import LinearRegressionModel
+from core_insure.assessor.linear_regression import LinearRegressionModel
+from core_insure.assessor.simple_nn import NNModel
+
 import os
 from enum import Enum, auto
 import numpy as np
 
 
-# eventually dynamically pulled from db, retrain if new attribute arises
+# eventually dynamically pulled from db, retrain when new attribute arises
 class Attributes(Enum):
-    ZIPCODE = auto()
-    ROOF_DAMAGE = auto()
-    FLOOD_DAMAGE = auto()
-    FOUNDATION_DAMAGE = auto()
-    WATER_LEVEL = auto()
-    INCOME = auto()
-    DESTROYED = auto()
-    HOUSEHOLD_SIZE = auto()
-    HOME_TYPE = auto()
+    roofDamageAmount = auto()
+    foundationDamageAmount = auto()
+    floodDamageAmount = auto()
+    waterLevel = auto()
+    rentalAssistanceAmount = auto()
+    rpfvl = auto()
+    ppfvl = auto()
+
 
 class HomeAssessor():
     def __init__(self, config):
+        self.config = config
         self.filepath = config.get('filepath', '')
         self.model_type = config.get('model', 'linear_regression')
         self.model_path = os.path.join(self.filepath, self.model_type)
         model_config = config[self.model_type]
+        model_config['input_size'] = len(Attributes)
         if self.model_type == 'linear_regression':
-            model_config['input_size'] = len(Attributes)
             self.model = LinearRegressionModel(model_config)
+        elif self.model_type == 'simple_nn':
+            self.model = NNModel(model_config)
         else:
             raise ValueError('model type unknown.')
 
@@ -39,13 +43,13 @@ class HomeAssessor():
         return feature_array
 
     def load(self):
-        self.model.load(self.filepath)  # .pth
+        self.model.load(self.filepath)
 
-    def train(self, dataset):
-        # repairAmount
-        for x, y in dataset:
-            # batch?
-            self.model.train(x, y)
+    def save(self):
+        self.model.save(self.filepath)
+
+    def train(self, inputs, labels, input_val=None, label_val=None):
+        self.model.train(inputs, labels, input_val, label_val)
         self.model.save(self.filepath)
 
     def predict_from_attributes(self, attributes):

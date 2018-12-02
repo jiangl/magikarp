@@ -1,5 +1,5 @@
 base: &base
-    filepath: '~/magikarp/core_insure/cache'
+    filepath: '.'
 data:
     dbname: 'postgres'
     host: 'localhost'
@@ -11,6 +11,11 @@ assessor:
     model: linear_regression
     linear_regression:
         output_size: 1
-        lr: 0.001
-        momentum: 0.01
+        lr: 1e-5
+        momentum: 0
         epochs: 500
+    simple_nn:
+        output_size: 1
+        lr: 1e-5
+        epochs: 500
+        hidden_size: 50
