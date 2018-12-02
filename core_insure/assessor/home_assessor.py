@@ -1,23 +1,50 @@
-from .linear_regression import LinearRegressionModel
+from core_insure.assessor.linear_regression import LinearRegressionModel
+from core_insure.assessor.simple_nn import NNModel
+
 import os
 from enum import Enum, auto
 import numpy as np
 
 
-# eventually dynamically pulled from db, retrain if new attribute arises
+# eventually dynamically pulled from db, retrain when new attribute arises
 class Attributes(Enum):
-    ZIPCODE = auto()
-    ROOF_DAMAGE = auto()
-    FLOOD_DAMAGE = auto()
-    FOUNDATION_DAMAGE = auto()
-    WATER_LEVEL = auto()
-    INCOME = auto()
-    DESTROYED = auto()
-    HOUSEHOLD_SIZE = auto()
-    HOME_TYPE = auto()
+    censusBlockId = auto()
+    censusYear = auto()
+    damagedZipCode = auto()
+    destroyed = auto()
+    disasterNumber = auto()
+    floodDamage = auto()
+    floodInsurance = auto()
+    foundationDamage = auto()
+    foundationDamageAmount = auto()
+    grossIncome = auto()
+    habitabilityRepairsRequired = auto()
+    homeOwnersInsurance = auto()
+    householdComposition = auto()
+    inspected = auto()
+    personalPropertyEligible = auto()
+    ppfvl = auto()
+    primaryResidence = auto()
+    rentalAssistanceAmount = auto()
+    rentalAssistanceEligible = auto()
+    rentalResourceZipCode = auto()
+    repairAmount = auto()
+    repairAssistanceEligible = auto()
+    replacementAmount = auto()
+    replacementAssistanceEligible = auto()
+    roofDamage = auto()
+    roofDamageAmount = auto()
+    rpfvl = auto()
+    sbaEligible = auto()
+    specialNeeds = auto()
+    tsaCheckedIn = auto()
+    tsaEligible = auto()
+    waterLevel = auto()
+
 
 class HomeAssessor():
     def __init__(self, config):
+        self.config = config
         self.filepath = config.get('filepath', '')
         self.model_type = config.get('model', 'linear_regression')
         self.model_path = os.path.join(self.filepath, self.model_type)
@@ -25,6 +52,9 @@ class HomeAssessor():
         if self.model_type == 'linear_regression':
             model_config['input_size'] = len(Attributes)
             self.model = LinearRegressionModel(model_config)
+        elif self.model_type == 'simple_nn':
+            model_config['input_size'] = len(Attributes)
+            self.model = NNModel(model_config)
         else:
             raise ValueError('model type unknown.')
 
@@ -39,14 +69,15 @@ class HomeAssessor():
         return feature_array
 
     def load(self):
-        self.model.load(self.filepath)  # .pth
+        self.model.load(self.filepath)
 
-    def train(self, dataset):
-        # repairAmount
-        for x, y in dataset:
-            # batch?
-            self.model.train(x, y)
+    def save(self):
         self.model.save(self.filepath)
+
+    def train(self, inputs, labels):
+        train_output = self.model.train(inputs, labels)
+        self.model.save(self.filepath)
+        return train_output
 
     def predict_from_attributes(self, attributes):
         features = self._featurize_attributes(attributes)

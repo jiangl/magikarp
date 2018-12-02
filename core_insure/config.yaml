@@ -1,5 +1,5 @@
 base: &base
-    filepath: '~/magikarp/core_insure/cache'
+    filepath: '.'
 assessor:
     <<: *base
     model: linear_regression
@@ -8,3 +8,8 @@ assessor:
         lr: 0.001
         momentum: 0.01
         epochs: 500
+    simple_nn:
+        output_size: 1
+        lr: 0.001
+        epochs: 500
+        hidden_size: 50
