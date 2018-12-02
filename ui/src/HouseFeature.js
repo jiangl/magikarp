@@ -34,9 +34,9 @@ export default class HouseFeature extends React.Component {
     this.verify();
   }
   verify() {
-    this.setState({
-      isVerified: true
-    });
+    this.setState(currState => ({
+      isVerified: !currState.isVerified
+    }));
   }
   render() {
     const { src, feature, severity, onRowClick } = this.props;
@@ -44,7 +44,11 @@ export default class HouseFeature extends React.Component {
     return (
       <div className="houseFeature" onClick={onRowClick}>
         <span className="src">{src}</span>
-        <span className={hasSeverity ? 'feature' : 'feature noSeverity'}>
+        <span
+          className={
+            this.state.isVerified ? 'feature' : 'feature noVerification'
+          }
+        >
           {feature}
         </span>
         {!this.state.isEditing ? (
@@ -64,7 +68,11 @@ export default class HouseFeature extends React.Component {
           </span>
         )}
         <span className="verified">
-          {this.state.isVerified ? <svg onClick={this.verify} /> : <svg />}
+          {this.state.isVerified ? (
+            <img onClick={this.verify} src="/images/checkSelected.png" />
+          ) : (
+            <img onClick={this.verify} src="/images/checkUnselected.png" />
+          )}
         </span>
       </div>
     );

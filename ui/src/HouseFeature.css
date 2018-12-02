@@ -14,9 +14,13 @@
   text-overflow: ellipsis;
 }
 
-.houseFeature > .verified > svg {
-  height: 10px;
-  width: 10px;
+.houseFeature > .verified > img {
+  height: 15px;
+  width: 15px;
+}
+
+.verified {
+  text-align: center;
 }
 
 .src {
@@ -29,7 +33,7 @@
   color: #697afe;
 }
 
-.feature.noSeverity {
+.feature.noVerification {
   color: #c692ff;
 }
 
