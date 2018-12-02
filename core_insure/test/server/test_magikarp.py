@@ -46,12 +46,6 @@ def test_get_houses(client, fake_house):
     assert values == expected_output
 
 def test_update_attributes(client):
-    # fake_attributes = {
-    #     Attributes.ZIPCODE: '02116',
-    #     Attributes.FLOOD_DAMAGE: '0',
-    #     Attributes.ROOF_DAMAGE: '1',
-    #     Attributes.INCOME: '34232'
-    # }
     fake_features = {
         'ZIPCODE': 11226,
         'FLOOD_DAMAGE': 0,

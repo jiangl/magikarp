@@ -1,44 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<WIP>
+## Overview
+{Coming Soon!}
 
-## Available Scripts
+## Technologies
+# to explicitly install
+python3.7 (https://www.python.org/downloads/)
+npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+rabbitmq (https://www.rabbitmq.com/download.html)
+postgres (http://postgresguide.com/setup/install.html)
 
-In the project directory, you can run:
+# to note
+PyTorch
+Pandas
+Numpy
+Flask
+Celery
 
-### `npm start`
+## Setup
+`initdb -D core_insure/data/psql`
+`cd core_insure && pip3 install -r requirements.txt && cd ..`
+`cd ui && npm install && cd ..`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Run Main Service
+Start DB
+`pg_ctl -D core_insure/data/psql -l logfile start`
+Start UI
+`cd ui && npm start && cd ..`
+Start Server
+`cd core_insure && python3 run_server.py && cd ..`
+Start queueing service & workers
+`rabbitmq-server`
+`celery -A server worker --loglevel=info`
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Analytics for models
+`jupyter notebook` --navigate to--> `model_analytics.ipynb`
