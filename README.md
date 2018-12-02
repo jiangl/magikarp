@@ -17,7 +17,7 @@ User Flow:
 9. Click on a claim's value (top of right-hand panel) to edit it.
 10. Editing claim value retrains model (middle panel refreshes)
 
-See the [Models](#model_explanation) section for a detailed explanation of the current AI models used and relevant decisions.
+See the <b>[Models](#model_explanation)</b> section for a detailed explanation of the current AI model used and relevant decisions.
 
 
 ## Technologies
@@ -52,12 +52,20 @@ See the [Models](#model_explanation) section for a detailed explanation of the c
   * Navigate to: `model_analytics.ipynb`
 
 ## Notes
-Due to lack of time, each individual component was prioritized for completion as the best possible proof of concept. Therefore, the backend and models work independently from the front-end. We thought proving the following would be most helpful:
-* A server and database could be set up to provide an API for the most useful components of the application
-  * Given a list of attributes and an updated claim amount from the user, the model could be retrained on new data sent by the user
-  *
+Due to lack of time, each individual component was prioritized for completion as the best possible proof of concept. Therefore, the backend and models work independently from the front-end. We thought proving the following would be most vital, so the following are the components completed:
+* A server and a database access object that provides an API for the most useful components of the application
+  * Given a list of attributes and an updated claim amount from the user, the model could be retrained on new data sent by the user in production. This model could then be used to update the values asynchronously in the database as well
+  * Specific houses and attributes could be saved and updated via the database access object
+  * Retrieving all relevant houses for a specific region, so that users can appropriately prioritize building selection
+* A UI to demonstrate the user flow and concept outline
+  * A heatmap to easily indentify and select most crucial areas
+  * Easy-to-navigate interface for prioritizing individual buildings
+  * A way to update features and provide additional training data to the model
+* A basic ML model that can estimate claim amounts based on granular data and learn from additional user interactions to demonstrate viability of overall product for the business case
 
-
+Components remaining:
+* Postgres implementation of database access object
+* Linking UI to hit the API
 
 ## <a name="model_explanation"></a>Models
 
@@ -86,23 +94,23 @@ So we've chosen to move forward with
     * Dataset 2 (Approved Claims):
       * Train vs Val Loss
       * <img src="./images/lin_reg_single.png" width="400" height="250" />
-      * Test Loss:
+      * Test Loss @ 300: 4084.12
   * Multi-Feature (7)
     * Dataset 2 (Approved Claims):
       * Train vs Val Loss
       * <img src="./images/lin_reg_multi.png" width="400" height="250" />
-      * Test Loss:
+      * Test Loss @ 9000: 2287.42
 * Simple NN
   * Single Feature
     * Dataset 2 (Approved Claims):
       * Train vs Val Loss
       * <img src="./images/nn_loss_single.png" width="400" height="250" />
-      * Test Loss:
+      * Test Loss @ 8000: 4176.87
   * Multi-Feature (7)
     * Dataset 2 (Approved):
       * Train vs Val Loss
       * <img src="./images/nn_loss_multi.png" width="400" height="250" />
-      * Test Loss:
+      * Test Loss @ 9000: 2386.17
 
 #### Improvements
 One of the biggest flaws with this model is the lack of granular data. At the level of information publicly provided, it is almost impossible for a model to predict a truly accurate claim value.

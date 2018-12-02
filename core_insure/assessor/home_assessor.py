@@ -1,5 +1,5 @@
-from core_insure.assessor.linear_regression import LinearRegressionModel
-from core_insure.assessor.simple_nn import NNModel
+from assessor.linear_regression import LinearRegressionModel
+from assessor.simple_nn import NNModel
 
 import os
 from enum import Enum, auto

@@ -11,12 +11,11 @@ def create_app(config_file):
     config = yaml.load(config_file)
 
     app = Flask(__name__.split('.')[0])
-    print('app.name')
-    import pdb; pdb.set_trace()
     celery = Celery(app.name, broker=config.get('celery').get('broker_url'))
     celery.config_from_object('celeryconfig')
 
     assessor = HomeAssessor(config.get('assessor'))
+    assessor.load()
     dataloader = DataLoader(config.get('data'))
 
     def run_save_claim_prediction(house_id):
@@ -30,7 +29,8 @@ def create_app(config_file):
             for house_id in house_ids:
                 run_save_claim_prediction(house_id)
         else:
-            pass # db generator, run for all
+            # TODO: db generator, run for all
+            pass
 
     @app.route('/')
     def test():
@@ -40,21 +40,10 @@ def create_app(config_file):
     @app.route('/get_houses', methods=['POST'])
     def get_houses():
         json_params = request.get_json()
-        latitude = json_params.get('latitude', 0)
-        longitude = json_params.get('longitude', 0)
-        # pull from db
-        fake_house = {
-            'house_id': 33242,
-            'risk_score': 19,
-            'home_value': 134234,
-            'insurance_quote': 200,
-            'model_confidence': 95,
-            'attributes': {},
-            'latitude': latitude,
-            'longitude': longitude
-        }
-
-        return jsonify([fake_house])
+        lat_long1 = json_params.get('lat_long1', 0)
+        lat_long2 = json_params.get('lat_long2', 0)
+        house_list = dataloader.load_houses(lat_long1, lat_long2)
+        return jsonify(house_list)
 
     @app.route('/update_attribute', methods=['POST'])
     def update_attribute():
